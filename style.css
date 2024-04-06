@@ -1,0 +1,50 @@
+body{
+    flex: center;
+    justify-content: center;
+    align-items: center;
+}
+
+
+table{
+    border-collapse: collapse;
+    /* align-items: center; */
+    /* margin-left: 50x; */
+}
+table.list{
+    width:100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+
+input[type=text], input[type=number] {
+    padding-top:  20px;
+    padding-bottom: 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+input[type=submit]{
+    width: 30%;
+    background-image: url('image.png'); 
+    background-size: cover;
+    color: #000;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
