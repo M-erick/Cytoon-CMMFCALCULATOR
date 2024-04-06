@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supply Manager</title>
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/app.css">
+    <title>
+        PRICE Estimator Calc
+    </title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<div
+    style="display: flex;justify-content:space-between; background-image: url('image.png'); background-size: cover; width: 80%; margin-top: 20px;margin-left: 40px;">
+    <div style="display: flex;justify-content: flex-start; gap: 25px;">
+        <h4 style="  padding:5px; padding-left: 10px;">CMMF</h4>
+        <div style="  margin:8px; padding: 5px; border: 1px solid black; border-radius: 8px;">
+            <a href="index.html" style="color:inherit;text-decoration: none;">CMFF</a>
+
+        </div>
+
+        <!-- <h4>logo</h4> -->
+    </div>
+
+    <div style="  margin:8px; padding: 5px; border: 1px solid black; border-radius: 8px;">
+        Admin
+    </div>
+
+</div>
+
+<body>
+
+    <table style="margin-left: 40px;">
+        <tr>
+            <td>
+                <form onsubmit="" autocomplete="off">
+                    <div>
+
+                        <input type="text" name="fund" id="fund" placeholder="fund" style="text-align: left;" required>
+                    </div>
+                    <div>
+                        <input type="number" name="amount" id="amount" placeholder="amount" required>
+                    </div>
+                    <div>
+                        <input type="number" name="rate" id="rate" placeholder="rate" required>
+                    </div>
+                    <div>
+                        <input type="text" name="simpleInterest" id="simpleInterest" placeholder="simpleInterest" required>
+                    </div>
+                    <div>
+                        <input type="number" name="taxableRate" id="taxableRate" placeholder="taxableRate" required>
+                    </div>
+                    <div>
+                        <input type="number" name="tax" id="tax" placeholder="tax" required>
+                    </div>
+                    <div>
+                        <input type="number" name="total" id="total" placeholder="total" required>
+                    </div>
+                    <!-- Align items to the right -->
+                    <div class="" style="text-align: center;">
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+    <table style="margin-left: 40px;">
+        <tr>
+            <td>
+                <h4 style="text-align: center;background-image: url('image.png'); background-size: cover;">Employee
+                    Records Output</h4>
+                <table class="list" id="itemList">
+                    <thead>
+                        <tr>
+                            <th>TYPE</th>
+                            <th>Amount</th>
+                            <th>Rate</th>
+                            <th>Simple Interest</th>
+                            <th>Taxable Rate</th>
+                            <th>Tax</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <!-- <script src="script.js"></script> -->
+    <script src="script-OOP.js"></script>
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/what-input.js"></script>
+    <script src="js/vendor/foundation.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
