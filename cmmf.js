@@ -124,6 +124,7 @@ class Customer {
     // implement promises here :still pending 
     onFormSubmit() {
         const formData = this.read();
+        // store the data in either way;when insert() or update() is called
         localStorage.setItem("cmmfData", JSON.stringify(formData));
         if (this.selectedRow === null) {
             this.insert(formData);
