@@ -142,6 +142,7 @@ class Customer {
           const storedData = localStorage.getItem("cmmfData");
           if (storedData) {
             try {
+                //converts stored data in string it back into its original JavaScript object format 
               const data = JSON.parse(storedData);
               this.insert(data);
               resolve(data);
@@ -149,7 +150,7 @@ class Customer {
               reject(new Error("Error parsing stored data"));
             }
           } else {
-            resolve("No data found in localStorage"); // Optional message
+            resolve("No data found in localStorage");
           }
         });
       }
