@@ -27,17 +27,17 @@ class Customer {
     calculateTax(newAmount) {
         const interest = this.calculateSimpleInterest(newAmount);
         const taxableRate = 0.05;
+        // two decimal point
         return (interest * taxableRate).toFixed(2);
     }
     // input  the output of this function in the  total variable
 
 
     calculateTotal(amount) {
-        // const amount = parseFloat(document.getElementById('amount').value);
         const interest = this.calculateSimpleInterest(amount);
         const tax = this.calculateTax(amount);
         const amountWithInterest = parseFloat(amount) + parseFloat(interest);
-        return (amountWithInterest - tax);
+        return (amountWithInterest - tax).toFixed(2);
     }
 
     // read form data 
@@ -74,8 +74,8 @@ class Customer {
 
 
         newRow.insertCell(7).innerHTML = `
-        <button onClick="customer.onEdit(this)" style ="border-radius:4px;background-image: url('image.png'); margin:5px; color:white; border:none; padding:14px 20px;">Edit</button>
-        <button onClick="customer.onDelete(this)" style="border-radius:4px;background-image: url('image.png');margin:5px;  color:white; border:none;padding:14px 20px;">Delete</button>`;
+        <button onClick="customer.onEdit(this)" style ="border-radius:4px;background-image: url('image.png'); margin:5px; color:white; border:none; padding:14px 10px;">Edit</button>
+        <button onClick="customer.onDelete(this)" style="border-radius:4px;background-image: url('image.png');margin:5px;  color:white; border:none;padding:14px 10px;">Delete</button>`;
 
 
     }
