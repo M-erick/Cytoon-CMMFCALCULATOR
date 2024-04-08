@@ -53,7 +53,7 @@ class Customer {
             amount,
             rate:this.rate,
             simpleInterest:this.calculateSimpleInterest(amount),
-            taxableRate,
+            taxableRate:this._taxableRate,
             tax:this.calculateTax(amount),
             total:this.calculateTotal(amount),
         };
@@ -134,12 +134,24 @@ class Customer {
         this.resetForm();
 
     }
-    loadData() {
-        const storedData = localStorage.getItem("cmmfData");
-        if (storedData) {
-          const data = JSON.parse(storedData);
-          this.insert(data);
-        }
+    
+
+    // Promises :try implementing async
+      loadData() {
+        return new Promise((resolve, reject) => {
+          const storedData = localStorage.getItem("cmmfData");
+          if (storedData) {
+            try {
+              const data = JSON.parse(storedData);
+              this.insert(data);
+              resolve(data);
+            } catch (error) {
+              reject(new Error("Error parsing stored data"));
+            }
+          } else {
+            resolve("No data found in localStorage"); // Optional message
+          }
+        });
       }
 
 }
