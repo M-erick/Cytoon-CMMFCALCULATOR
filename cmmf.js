@@ -4,11 +4,14 @@ class Customer {
         // this.newAmount = null;
 
         this.selectedRow = null;
-        this.simpleInterest = null;
-        this.total = null;
+        this._taxableRate = 0.05;
     }
     get rate() {
-        return this._rate;
+        // to return the percentage
+        return this._rate *100;
+    }
+    get taxableRate(){
+        return this._taxableRate;
     }
 
 
@@ -17,46 +20,45 @@ class Customer {
 
     calculateSimpleInterest(newAmount) {
 
-        return newAmount * this.rate ;
+        return (newAmount * this.rate)/100 ;
 
 
+    }
+    calculateTax(newAmount) {
+        const interest = this.calculateSimpleInterest(newAmount);
+        const taxableRate = 0.05;
+        return (interest * taxableRate).toFixed(2);
     }
     // input  the output of this function in the  total variable
 
-    calculateTotal(newAmount) {
 
-        const  toBeReceived = this.simpleInterest;
-        return   newAmount + toBeReceived;
-
+    calculateTotal(amount) {
+        // const amount = parseFloat(document.getElementById('amount').value);
+        const interest = this.calculateSimpleInterest(amount);
+        const tax = this.calculateTax(amount);
+        const amountWithInterest = parseFloat(amount) + parseFloat(interest);
+        return (amountWithInterest - tax);
     }
+
+    // read form data 
     read() {
         const fund = document.getElementById("fund").value;
         const amount = document.getElementById("amount").value;
 
-        const rate = document.getElementById("rate").value;
-
-        const taxableRate = document.getElementById("taxableRate").value;
-        const tax = document.getElementById("tax").value;
-
-        // after fetching the amount ,we pass it to calculateSimpleInterest function
-
-        this.simpleInterest = this.calculateSimpleInterest(amount);
-
-        this.total = this.calculateTotal(amount);
-
-        // total value should be set by calculateTotal method
-        // const total = document.getElementById("total").value;
+        document.getElementById("rate").value = this.rate
+        document.getElementById("taxableRate").value = this._taxableRate;
 
         return {
             fund,
             amount,
-            rate,
-            simpleInterest:this.simpleInterest,
+            rate:this.rate,
+            simpleInterest:this.calculateSimpleInterest(amount),
             taxableRate,
-            tax,
-            total :this.total,
+            tax:this.calculateTax(amount),
+            total:this.calculateTotal(amount),
         };
     }
+    // insert data into the table 
     insert(data) {
         const table = document.getElementById("cmmfList").getElementsByTagName('tbody')[0];
         const newRow = table.insertRow(table.length);
@@ -77,6 +79,8 @@ class Customer {
 
 
     }
+
+//   update the  display table 
     update(formData) {
         this.selectedRow.cells[0].innerHTML = formData.fund;
         this.selectedRow.cells[1].innerHTML = formData.amount;
@@ -84,25 +88,26 @@ class Customer {
         this.selectedRow.cells[3].innerHTML = formData.simpleInterest;
         this.selectedRow.cells[4].innerHTML = formData.taxableRate;
         this.selectedRow.cells[5].innerHTML = formData.tax;
-        // this.selectedRow.cells[6].innerHTML = formData.total;
+        this.selectedRow.cells[6].innerHTML = formData.total;
 
-    }
-    delete(td) {
+      }
+    //   delete the record from the table
+    onDelete(td) {
         const row = td.parentElement.parentElement;
         document.getElementById("cmmfList").deleteRow(row.rowIndex);
         this.resetForm();
     }
+    // edit the form
     onEdit(td) {
         this.selectedRow = td.parentElement.parentElement;
         document.getElementById("fund").value = this.selectedRow.cells[0].innerHTML;
         document.getElementById("amount").value = this.selectedRow.cells[1].innerHTML;
-        // document.getElementById("rate").value = this.selectedRow.cells[2].innerHTML;
-        // document.getElementById("simpleInterest").value = this.selectedRow.cells[3].innerHTML;
-        document.getElementById("taxableRate").value = this.selectedRow.cell[2].innerHTML;
-        document.getElementById("tax").value = this.selectedRow.cell[3].innerHTML;
 
-
+        // Disable other input fields during editing
+        document.getElementById("taxableRate").disabled = true;
+        document.getElementById("tax").disabled = true;
     }
+    // reset the Form 
     resetForm() {
         document.getElementById("fund").value = "";
         document.getElementById("amount").value = "";
@@ -116,17 +121,47 @@ class Customer {
     }
 
 
-    // implement promises here 
+    // implement promises here :still pending 
     onFormSubmit() {
         const formData = this.read();
+        localStorage.setItem("cmmfData", JSON.stringify(formData));
         if (this.selectedRow === null) {
             this.insert(formData);
+
         } else {
             this.update(formData);
         }
         this.resetForm();
 
     }
+    loadData() {
+        const storedData = localStorage.getItem("cmmfData");
+        if (storedData) {
+          const data = JSON.parse(storedData);
+          this.insert(data);
+        }
+      }
 
 }
 const customer = new Customer();
+// Load data on page load
+customer.loadData();
+const amountInput = document.getElementById("amount");
+
+// built-in events:display the default value after the amount field value  has been keyed in  
+amountInput.addEventListener("change", () => {
+  const amount = amountInput.value;
+  if (amount) { 
+    const simpleInterest = customer.calculateSimpleInterest(amount);
+    document.getElementById("simpleInterest").value = simpleInterest;
+    document.getElementById("rate").value= customer.rate;
+    document.getElementById("tax").value = customer.calculateTax(amount);
+    document.getElementById("total").value = customer.calculateTotal(amount);
+    document.getElementById("taxableRate").value = customer.taxableRate;
+    // create another change Event to implement the display of total 
+    // document.getElementById("total").value =customer.calculateTotal(amount) ;
+  } else {
+    console.log("Error");
+  }
+});
+
