@@ -166,19 +166,50 @@ const amountInput = document.getElementById("amount");
 const rateInput = document.getElementById("rate");
 const taxableRateInput = document.getElementById("taxableRate");
 
-rateInput.addEventListener("input", () => {
+
+// implemented three built-in Events :the events below are redundant ;how can i combine them or nest them ?research
+amountInput.addEventListener("input", () => {
   const amount = amountInput.value;
   const rate = parseFloat(rateInput.value);
+  const taxableRate = parseFloat(taxableRateInput.value);
+
   
 
   if (amount) { 
     const simpleInterest = customer.calculateSimpleInterest(amount,rate);
     document.getElementById("simpleInterest").value = simpleInterest.toFixed(2);
+    document.getElementById("total").value = customer.calculateTotal(amount,rate,taxableRate);
+    document.getElementById("tax").value = customer.calculateTax(amount,rate,taxableRate);
+
+
    
   } else {
     console.log("Error");
   }
 });
+
+
+rateInput.addEventListener("input", () => {
+  const amount = amountInput.value;
+  const rate = parseFloat(rateInput.value);
+  const taxableRate = parseFloat(taxableRateInput.value);
+
+  
+
+  if (rate) { 
+    const simpleInterest = customer.calculateSimpleInterest(amount,rate);
+    document.getElementById("simpleInterest").value = simpleInterest.toFixed(2);
+    document.getElementById("total").value = customer.calculateTotal(amount,rate,taxableRate);
+    document.getElementById("tax").value = customer.calculateTax(amount,rate,taxableRate);
+
+
+   
+  } else {
+    console.log("Error");
+  }
+});
+
+// taxableRate  userEvent
 taxableRateInput.addEventListener("input" , ()=>{
   const taxableRate = parseFloat(taxableRateInput.value);
   const amount = amountInput.value;
@@ -188,8 +219,6 @@ if (taxableRate) {
 
   document.getElementById("tax").value = customer.calculateTax(amount,rate,taxableRate);
   document.getElementById("total").value = customer.calculateTotal(amount,rate,taxableRate);
-
-  
 }
 
 });
