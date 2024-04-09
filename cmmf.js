@@ -164,26 +164,33 @@ const customer = new Customer();
 customer.loadData();
 const amountInput = document.getElementById("amount");
 const rateInput = document.getElementById("rate");
-const taxableRate = document.getElementById("taxableRate");
+const taxableRateInput = document.getElementById("taxableRate");
 
-// built-in events:display the default value after the amount field value  has been keyed in  
-amountInput.addEventListener("change", () => {
+rateInput.addEventListener("input", () => {
   const amount = amountInput.value;
-  const rate = rateInput.value;
-  const taxableRate = taxableRate.value;
+  const rate = parseFloat(rateInput.value);
   
 
   if (amount) { 
     const simpleInterest = customer.calculateSimpleInterest(amount,rate);
-    document.getElementById("simpleInterest").value = simpleInterest;
-    // document.getElementById("rate").value= customer.rate;
-    document.getElementById("tax").value = customer.calculateTax(amount,rate,taxableRate);
-    document.getElementById("total").value = customer.calculateTotal(amount,rate,taxableRate);
-    // document.getElementById("taxableRate").value = customer.taxableRate;
-    // create another change Event to implement the display of total 
-    // document.getElementById("total").value =customer.calculateTotal(amount) ;
+    document.getElementById("simpleInterest").value = simpleInterest.toFixed(2);
+   
   } else {
     console.log("Error");
   }
+});
+taxableRateInput.addEventListener("input" , ()=>{
+  const taxableRate = parseFloat(taxableRateInput.value);
+  const amount = amountInput.value;
+  const rate = parseFloat(rateInput.value);
+
+if (taxableRate) {
+
+  document.getElementById("tax").value = customer.calculateTax(amount,rate,taxableRate);
+  document.getElementById("total").value = customer.calculateTotal(amount,rate,taxableRate);
+
+  
+}
+
 });
 
